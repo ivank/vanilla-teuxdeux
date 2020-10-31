@@ -1,0 +1,8 @@
+.add {
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+.add.fade-in {
+  transform: scaleY(0.9);
+  opacity: 0;
+}
