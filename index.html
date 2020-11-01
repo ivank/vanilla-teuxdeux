@@ -6,10 +6,9 @@
     <title>TuexDuex Study</title>
 
     <script type="module" src="./custom-elements/index.js" defer></script>
-    <script src="./index.js" defer></script>
   </head>
-  <body id="app">
-    <named-lists> </named-lists>
+  <body>
+    <app-container> </app-container>
   </body>
 
   <template id="week-lists">
@@ -20,13 +19,6 @@
     <button type="button" id="forward">Forwad</button>
   </template>
 
-  <template id="named-lists">
-    <div>
-      <slot></slot>
-    </div>
-    <button type="button" id="add-list">Add List</button>
-  </template>
-
   <template id="daily-list">
     <div>
       <span id="title">Title</span>
@@ -34,24 +26,6 @@
         <slot></slot>
       </div>
       <button type="button" id="add-item">Add</button>
-    </div>
-  </template>
-
-  <template id="todo-list">
-    <div>
-      <span id="title">Title</span>
-      <div>
-        <slot></slot>
-      </div>
-      <button type="button" id="add-item">Add</button>
-    </div>
-  </template>
-
-  <template id="todo-list-item">
-    <div>
-      <span id="text">this is some content</span>
-      <input type="text" id="input" />
-      <button type="button" id="edit">Edit</button>
     </div>
   </template>
 </html>

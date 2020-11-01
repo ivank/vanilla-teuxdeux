@@ -1,4 +1,4 @@
-import { TodoListElement } from './todo-list.js';
+import { TodoListComponent } from './todo-list.component.js';
 
 function toWeekRange(from) {
   return Array.from(Array(7).keys()).map((day) => {
@@ -7,6 +7,14 @@ function toWeekRange(from) {
     return currentDay;
   });
 }
+
+const template = /* html */ `
+  <div>
+    <slot></slot>
+  </div>
+  <button type="button" id="back">Back</button>
+  <button type="button" id="forward">Forwad</button>
+`;
 
 export class WeekListsElement extends HTMLElement {
   get data() {
@@ -23,7 +31,7 @@ export class WeekListsElement extends HTMLElement {
       if (this._data.some((_item) => _item.id === item.id)) {
         this.querySelector(`#${item.id}`).data = item;
       } else {
-        this.appendChild(new TodoListElement(item));
+        this.appendChild(new TodoListComponent(item));
       }
     }
 
@@ -36,12 +44,8 @@ export class WeekListsElement extends HTMLElement {
     this._data = data;
   }
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' }).appendChild(
-      document.getElementById('week-lists').content.cloneNode(true),
-    );
-    this._data = [];
+  constructor(state) {
+    super({ id: 'week-lists', template, state });
   }
 
   connectedCallback() {

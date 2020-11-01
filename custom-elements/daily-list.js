@@ -1,4 +1,4 @@
-import { TodoListItemElement } from './todo-list-item.js';
+import { TodoListItemComponent } from './todo-list-item.component.js';
 
 const dateFormat = new Intl.DateTimeFormat('en-US');
 
@@ -17,7 +17,7 @@ export class DailyListElement extends HTMLElement {
       if (this._data.items.some((_item) => _item.id === item.id)) {
         this.querySelector(`#${item.id}`).data = item;
       } else {
-        this.appendChild(new TodoListItemElement(item));
+        this.appendChild(new TodoListItemComponent(item));
       }
     }
 
