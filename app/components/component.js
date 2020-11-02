@@ -1,4 +1,4 @@
-import { moveIndex } from './utils.js';
+import { moveIndex } from '../utils.js';
 
 export function updateList({ prevIds = [], nextIds = [], add, update, element }) {
   prevIds.forEach((prevId) => {

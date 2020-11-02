@@ -1,14 +1,26 @@
 import { Component, updateList } from './component.js';
 import { TodoListItemComponent } from './todo-list-item.component.js';
-import { addTodoItem } from './app.js';
+import { addTodoItem } from '../state.js';
 
 const template = /* html */ `
-  <div>
+  <style>
+    :host {
+      flex-basis: 14.2857142857%;
+      height: 400px;
+    }
+    .list {
+      padding: 10px;
+    }
+    input {
+      width: 100%;
+    }
+  </style>
+  <div class="list">
     <span id="title">Title</span>
     <div>
       <slot></slot>
+      <input id="new">
     </div>
-    <button type="button" id="add-item">Add</button>
   </div>
 `;
 
@@ -33,8 +45,9 @@ export class TodoListComponent extends Component {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector('#add-item').addEventListener('click', () => {
-      this.dispatch(addTodoItem(this.id));
+    this.shadowRoot.querySelector('#new').addEventListener('change', (event) => {
+      this.dispatch(addTodoItem(this.id, event.target.value));
+      event.target.value = '';
     });
   }
 }

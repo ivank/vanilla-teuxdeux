@@ -5,27 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TuexDuex Study</title>
 
-    <script type="module" src="./custom-elements/index.js" defer></script>
+    <script type="module" src="./app/index.js" defer></script>
+    <link rel="stylesheet" href="style/index.css" />
   </head>
   <body>
     <app-container> </app-container>
   </body>
-
-  <template id="week-lists">
-    <div>
-      <slot></slot>
-    </div>
-    <button type="button" id="back">Back</button>
-    <button type="button" id="forward">Forwad</button>
-  </template>
-
-  <template id="daily-list">
-    <div>
-      <span id="title">Title</span>
-      <div>
-        <slot></slot>
-      </div>
-      <button type="button" id="add-item">Add</button>
-    </div>
-  </template>
 </html>

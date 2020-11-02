@@ -1,14 +1,36 @@
 import { Component, updateList } from './component.js';
-import { addNamedList, changeNamedListIndex } from './app.js';
+import { addNamedList, changeNamedListIndex } from '../state.js';
 import { TodoListComponent } from './todo-list.component.js';
 
 const template = /* html */ `
-  <div>
-    <slot></slot>
+  <style>
+    .content {
+      display: flex;
+    }
+    .items {
+      flex-grow: 2;
+    }
+    .left-ui, .right-ui {
+      width: 50px;
+    }
+    slot {
+      display: flex;
+    }
+  </style>
+  <div class="header">
+    <button type="button" id="add-list">Add List</button>
   </div>
-  <button type="button" id="add-list">Add List</button>
-  <button type="button" id="prev">Prev</button>
-  <button type="button" id="next">Next</button>
+  <div class="content">
+    <div class="left-ui">
+      <button type="button" id="prev">Prev</button>
+    </div>
+    <div class="items">
+      <slot></slot>
+    </div>
+    <div class="right-ui">
+      <button type="button" id="next">Next</button>
+    </div>
+  </div>
 `;
 
 export class NamedListsComponent extends Component {

@@ -1,0 +1,8 @@
+/* app-container {
+  display: grid;
+  grid-template-columns: [left-ui] 40px [content] auto [right-ui] 40px;
+  grid-template-rows: [header] 100px [daily] 400px [named] 400px;
+} */
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
