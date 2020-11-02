@@ -10,39 +10,39 @@ html {
 /**
  * Todo List Item
  */
-.todo-list-item {
+.todo-item {
   height: 20px;
   overflow: hidden;
   position: relative;
   border-bottom: 1px solid gray;
 }
-.todo-list-item button {
+.todo-item button {
   display: none;
   position: absolute;
   top: 0;
   right: 0;
 }
-.todo-list-item input {
+.todo-item input {
   width: 100%;
   display: none;
 }
-.todo-list-item.edited .text {
+.todo-item.edited .text {
   display: none;
 }
-.todo-list-item.edited input {
+.todo-item.edited input {
   display: block;
 }
-.todo-list-item:hover {
+.todo-item:hover {
   background-color: lightgray;
 }
-.todo-list-item:hover button {
+.todo-item:hover button {
   display: block;
 }
 
 /**
  * Todo List
  */
-todo-list {
+.todo-list {
   flex-basis: 14.2857142857%;
   height: 400px;
   padding: 10px;
@@ -69,20 +69,20 @@ todo-list {
 /**
  * Day List
  */
-day-list {
+.day-list {
   flex-basis: 14.2857142857%;
   height: 400px;
   padding: 10px;
 }
-day-list .title {
+.day-list .title {
   font: 30px bold Helvetica, sans-serif;
   text-align: center;
   text-transform: uppercase;
 }
-day-list .date {
+.day-list .date {
   text-align: center;
   margin-bottom: 20px;
 }
-day-list .day-list-add {
+.day-list .day-list-add {
   width: 100%;
 }

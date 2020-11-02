@@ -1,6 +1,6 @@
 import { addDailyTodoItem } from '../state.js';
-import { Component, updateList } from './component.js';
-import { TodoListItemComponent } from './todo-list-item.component.js';
+import { component, updateList, dispatch } from './component.js';
+import * as todoItem from './todo-item.component.js';
 
 const titleFormat = new Intl.DateTimeFormat(navigator.language, { weekday: 'long' });
 const dateFormat = new Intl.DateTimeFormat(navigator.language, {
@@ -11,11 +11,11 @@ const dateFormat = new Intl.DateTimeFormat(navigator.language, {
 
 const template = /* html */ `
   <div class="day-list">
-    <div class="title">Title</div>
-    <div class="date">Title</div>
+    <div class="title" data-day-list-title>Title</div>
+    <div class="date" data-day-list-date>Title</div>
     <div>
-      <div class="day-list-items"></div>
-      <input type="text" class="day-list-add">
+      <div class="day-list-items" data-day-list-items></div>
+      <input type="text" class="day-list-add" data-day-list-new>
     </div>
   </div>
 `;
@@ -28,37 +28,31 @@ function toDayItems(state, day) {
   );
 }
 
-export class DayListComponent extends Component {
-  get day() {
-    return this._day;
-  }
+export function update(prevState, nextState, el) {
+  el.querySelector(':scope [data-day-list-title]').innerText = titleFormat.format(el.day);
+  el.querySelector(':scope [data-day-list-date]').innerText = dateFormat.format(el.day);
 
-  update(prevState, nextState) {
-    this.querySelector(':scope .title').innerText = titleFormat.format(this.day);
-    this.querySelector(':scope .date').innerText = dateFormat.format(this.day);
+  const prevIds = toDayItems(prevState, el.day);
+  const nextIds = toDayItems(nextState, el.day);
 
-    const prevIds = toDayItems(prevState, this.day);
-    const nextIds = toDayItems(nextState, this.day);
+  updateList({
+    element: el.querySelector(':scope [data-day-list-items]'),
+    prevIds,
+    nextIds,
+    add: (id) => todoItem.create(id, nextState),
+    update: (item) => todoItem.update(prevState, nextState, item),
+  });
+  return el;
+}
 
-    updateList({
-      element: this.querySelector(':scope .day-list-items'),
-      prevIds,
-      nextIds,
-      add: (id) => new TodoListItemComponent(id, nextState),
-      update: (item) => item.update(prevState, nextState),
-    });
-  }
+export function create(id, day, state) {
+  const el = component(id, template);
+  el.day = day;
+  update(undefined, state, el);
 
-  constructor(id, day, state) {
-    super({ id, template });
-    this._day = day;
-    this.update(undefined, state);
-  }
-
-  connectedCallback() {
-    this.querySelector(':scope .day-list-add').addEventListener('change', (event) => {
-      this.dispatch(addDailyTodoItem(this.id, this.day, event.target.value));
-      event.target.value = '';
-    });
-  }
+  el.querySelector(':scope [data-day-list-new]').addEventListener('change', (event) => {
+    dispatch(addDailyTodoItem(this.id, el.day, event.target.value), el);
+    event.target.value = '';
+  });
+  return el;
 }

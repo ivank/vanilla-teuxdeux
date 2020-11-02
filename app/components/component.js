@@ -33,6 +33,20 @@ export function updateList({ prevIds = [], nextIds = [], add, update, element })
   });
 }
 
+export function component(id, template) {
+  const container = document.createElement('div');
+  container.innerHTML = template.trim();
+  const el = container.firstChild;
+  el.id = id;
+  return el;
+}
+
+export function dispatch(detail, el) {
+  detail.type
+    ? el.dispatchEvent(new CustomEvent('action', { detail, bubbles: true }))
+    : detail((detail) => el.dispatchEvent(new CustomEvent('action', { detail, bubbles: true })));
+}
+
 export class Component extends HTMLElement {
   update() {}
 
