@@ -2,42 +2,10 @@ import { Component } from './component.js';
 import { toggleTodoItemDone, changeTodoItemText, removeTodoItem } from '../state.js';
 
 export const template = /* html */ `
-  <style>
-    :host {
-      height: 20px;
-      overflow: hidden;
-      position: relative;
-    }
-    .item {
-      border-bottom: 1px solid gray;
-    }
-    button {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-    input {
-      width: 100%;
-      display: none;
-    }
-    .item.edited .text {
-      display: none;
-    }
-    .item.edited input {
-      display: block;
-    }
-    .item:hover {
-      background-color: lightgray;
-    }
-    .item:hover button {
-      display: block;
-    }
-  </style>
-  <div class="item" id="item">
-    <span class="text" id="text">this is some content</span>
-    <input type="text" id="input">
-    <button type="button" id="edit">Edit</button>
+  <div class="todo-list-item">
+    <span class="text">this is some content</span>
+    <input type="text">
+    <button type="button">Edit</button>
   </div>
 `;
 
@@ -46,8 +14,8 @@ export class TodoListItemComponent extends Component {
     const next = nextState.todoItems.find((item) => item.id === this.id);
 
     this.classList.toggle('done', next.isDone);
-    this.shadowRoot.querySelector('#text').innerText = next.text;
-    this.shadowRoot.querySelector('#input').value = next.text;
+    this.querySelector(':scope .text').innerText = next.text;
+    this.querySelector(':scope input').value = next.text;
   }
 
   constructor(id, state) {
@@ -55,15 +23,15 @@ export class TodoListItemComponent extends Component {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector('#text').addEventListener('click', () => {
+    this.querySelector(':scope .text').addEventListener('click', () => {
       this.dispatch(toggleTodoItemDone(this.id, true));
     });
-    this.shadowRoot.querySelector('#edit').addEventListener('click', () => {
-      this.shadowRoot.querySelector('#item').classList.toggle('edited', true);
-      this.shadowRoot.querySelector('#input').select();
+    this.querySelector(':scope button').addEventListener('click', () => {
+      this.querySelector(':scope > .todo-list-item').classList.toggle('edited', true);
+      this.querySelector(':scope input').select();
     });
-    this.shadowRoot.querySelector('#input').addEventListener('change', (event) => {
-      this.shadowRoot.querySelector('#item').classList.toggle('edited', false);
+    this.querySelector(':scope input').addEventListener('change', (event) => {
+      this.querySelector(':scope > .todo-list-item').classList.toggle('edited', false);
       if (event.target.value) {
         this.dispatch(changeTodoItemText(this.id, event.target.value));
       } else {

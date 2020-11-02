@@ -11,30 +11,15 @@ function toDateRange(from, days = 7) {
 }
 
 const template = /* html */ `
-  <style>
-    :host {
-      display: flex;
-    }
-    .content {
-      flex-grow: 2;
-    }
-    .left-ui, .right-ui {
-      width: 50px;
-    }
-    slot {
-      display: flex;
-    }
-  </style>
+<div class="content">
   <div class="left-ui">
     <button type="button" id="back">Back</button>
   </div>
-  <div class="content">
-    <slot></slot>
-  </div>
+  <div class="items"></div>
   <div class="right-ui">
     <button type="button" id="forward">Forwad</button>
   </div>
-
+</div>
 `;
 
 function toDailyLists(state, days = 7) {
@@ -52,7 +37,7 @@ export class DailyListsComponent extends Component {
     const nextLists = toDailyLists(nextState);
 
     updateList({
-      element: this,
+      element: this.querySelector(':scope > .content > .items'),
       prevIds: prevLists.map((item) => item.id),
       nextIds: nextLists.map((item) => item.id),
       add: (id) =>
@@ -66,11 +51,11 @@ export class DailyListsComponent extends Component {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector('#back').addEventListener('click', () => {
+    this.querySelector(':scope .left-ui button').addEventListener('click', () => {
       this.dispatch(changeDailyListsCurrentDay(-1));
     });
 
-    this.shadowRoot.querySelector('#forward').addEventListener('click', () => {
+    this.querySelector(':scope .right-ui button').addEventListener('click', () => {
       this.dispatch(changeDailyListsCurrentDay(+1));
     });
   }

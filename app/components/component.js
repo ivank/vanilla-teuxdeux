@@ -53,7 +53,7 @@ export class Component extends HTMLElement {
     this._id = id;
     this.setAttribute('id', id);
     if (template) {
-      this.attachShadow({ mode: 'open' }).innerHTML = template;
+      this.innerHTML = template;
     }
     if (state) {
       this.update(undefined, state);

@@ -3,32 +3,16 @@ import { addNamedList, changeNamedListIndex } from '../state.js';
 import { TodoListComponent } from './todo-list.component.js';
 
 const template = /* html */ `
-  <style>
-    .content {
-      display: flex;
-    }
-    .items {
-      flex-grow: 2;
-    }
-    .left-ui, .right-ui {
-      width: 50px;
-    }
-    slot {
-      display: flex;
-    }
-  </style>
   <div class="header">
-    <button type="button" id="add-list">Add List</button>
+    <button type="button">Add List</button>
   </div>
   <div class="content">
     <div class="left-ui">
-      <button type="button" id="prev">Prev</button>
+      <button type="button">Prev</button>
     </div>
-    <div class="items">
-      <slot></slot>
-    </div>
+    <div class="items"></div>
     <div class="right-ui">
-      <button type="button" id="next">Next</button>
+      <button type="button">Next</button>
     </div>
   </div>
 `;
@@ -39,7 +23,7 @@ export class NamedListsComponent extends Component {
     const nextIds = nextState.namedLists.items.slice(nextState.namedLists.index);
 
     updateList({
-      element: this,
+      element: this.querySelector(':scope > .content > .items'),
       prevIds,
       nextIds,
       add: (id) => new TodoListComponent(id, nextState),
@@ -52,13 +36,13 @@ export class NamedListsComponent extends Component {
   }
 
   connectedCallback() {
-    this.shadowRoot.querySelector('#add-list').addEventListener('click', () => {
+    this.querySelector(':scope > .header > button').addEventListener('click', () => {
       this.dispatch(addNamedList());
     });
-    this.shadowRoot.querySelector('#prev').addEventListener('click', () => {
+    this.querySelector(':scope .left-ui button').addEventListener('click', () => {
       this.dispatch(changeNamedListIndex(+1));
     });
-    this.shadowRoot.querySelector('#next').addEventListener('click', () => {
+    this.querySelector(':scope .right-ui button').addEventListener('click', () => {
       this.dispatch(changeNamedListIndex(-1));
     });
   }
