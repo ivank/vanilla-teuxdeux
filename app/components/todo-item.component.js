@@ -2,11 +2,11 @@ import { component, dispatch } from './component.js';
 import { toggleTodoItemDone, changeTodoItemText, removeTodoItem } from '../state.js';
 
 export const template = /* html */ `
-  <div class="todo-item">
+  <li class="todo-item">
     <span class="text" data-item-text>this is some content</span>
     <input type="text" data-item-input>
     <button type="button" data-item-edit>Edit</button>
-  </div>
+  </li>
 `;
 
 export function update(prevState, nextState, el) {

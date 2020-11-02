@@ -11,7 +11,7 @@ const template = /* html */ `
       <div class="left-ui">
         <button type="button" data-named-lists-prev>Prev</button>
       </div>
-      <div class="items" data-named-lists-items></div>
+      <ol class="items" data-named-lists-items></ol>
       <div class="right-ui">
         <button type="button" data-named-lists-next>Next</button>
       </div>

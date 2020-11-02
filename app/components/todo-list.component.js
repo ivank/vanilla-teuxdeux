@@ -6,7 +6,7 @@ const template = /* html */ `
   <div class="todo-list">
     <span data-todo-list-title>Title</span>
     <div>
-      <div class="todo-items" data-todo-list-items></div>
+      <ol class="todo-items"></ol>
       <input class="todo-list-new" data-todo-list-new>
     </div>
   </div>
@@ -19,7 +19,7 @@ export function update(prevState, nextState, el) {
   el.querySelector(':scope [data-todo-list-title]').innerText = next.name;
 
   updateList({
-    element: el.querySelector(':scope [data-todo-list-items]'),
+    element: el.querySelector(':scope ol'),
     nextIds: next.items,
     prevIds: prev?.items,
     add: (id) => todoItem.create(id, nextState),

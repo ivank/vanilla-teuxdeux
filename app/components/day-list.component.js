@@ -14,7 +14,7 @@ const template = /* html */ `
     <div class="title" data-day-list-title>Title</div>
     <div class="date" data-day-list-date>Title</div>
     <div>
-      <div class="day-list-items" data-day-list-items></div>
+      <ol class="day-list-items"></ol>
       <input type="text" class="day-list-add" data-day-list-new>
     </div>
   </div>
@@ -36,7 +36,7 @@ export function update(prevState, nextState, el) {
   const nextIds = toDayItems(nextState, el.day);
 
   updateList({
-    element: el.querySelector(':scope [data-day-list-items]'),
+    element: el.querySelector(':scope ol'),
     prevIds,
     nextIds,
     add: (id) => todoItem.create(id, nextState),

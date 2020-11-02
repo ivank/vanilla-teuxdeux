@@ -12,7 +12,7 @@ html {
  */
 .todo-item {
   height: 20px;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
   border-bottom: 1px solid gray;
 }
@@ -30,7 +30,7 @@ html {
   display: none;
 }
 .todo-item.edited input {
-  display: block;
+  display: inline;
 }
 .todo-item:hover {
   background-color: lightgray;
@@ -46,6 +46,8 @@ html {
   flex-basis: 14.2857142857%;
   height: 400px;
   padding: 10px;
+}
+.todo-list ol {
 }
 .todo-list .todo-list-new {
   width: 100%;
@@ -73,6 +75,8 @@ html {
   flex-basis: 14.2857142857%;
   height: 400px;
   padding: 10px;
+}
+.day-list ol {
 }
 .day-list .title {
   font: 30px bold Helvetica, sans-serif;
