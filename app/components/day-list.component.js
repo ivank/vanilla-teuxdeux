@@ -1,4 +1,4 @@
-import { addDailyTodoItem } from '../state.js';
+import { addDailyTodoItem, moveTodoItemToDay } from '../state.js';
 import { component, updateList, dispatch } from './component.js';
 import * as todoItem from './todo-item.component.js';
 
@@ -13,9 +13,9 @@ const template = /* html */ `
   <div class="day-list">
     <div class="title" data-day-list-title>Title</div>
     <div class="date" data-day-list-date>Title</div>
-    <div>
+    <div class="todo-items-container">
       <ol class="day-list-items"></ol>
-      <input type="text" class="day-list-add" data-day-list-new>
+      <input type="text" class="new-item" data-day-list-new>
     </div>
   </div>
 `;
@@ -51,8 +51,22 @@ export function create(id, day, state) {
   update(undefined, state, el);
 
   el.querySelector(':scope [data-day-list-new]').addEventListener('change', (event) => {
-    dispatch(addDailyTodoItem(this.id, el.day, event.target.value), el);
+    dispatch(addDailyTodoItem(el.day, event.target.value), el);
     event.target.value = '';
   });
+
+  /**
+   * Drag items from different lists / days
+   */
+
+  el.addEventListener('drop', (event) => {
+    dispatch(moveTodoItemToDay(event.dataTransfer.getData('application/todo-id'), el.day), el);
+    event.preventDefault();
+  });
+
+  el.addEventListener('dragover', (event) => {
+    event.preventDefault();
+  });
+
   return el;
 }

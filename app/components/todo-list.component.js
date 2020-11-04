@@ -1,13 +1,13 @@
 import { component, updateList, dispatch } from './component.js';
 import * as todoItem from './todo-item.component.js';
-import { addTodoItem } from '../state.js';
+import { addTodoItem, moveTodoItemToList } from '../state.js';
 
 const template = /* html */ `
   <div class="todo-list">
     <span data-todo-list-title>Title</span>
-    <div>
+    <div class="todo-items-container">
       <ol class="todo-items"></ol>
-      <input class="todo-list-new" data-todo-list-new>
+      <input class="new-item" data-todo-list-new>
     </div>
   </div>
 `;
@@ -35,33 +35,19 @@ export function create(id, state) {
     dispatch(addTodoItem(el.id, event.target.value), el);
     event.target.value = '';
   });
+
+  /**
+   * Drag items from different lists / days
+   */
+
+  el.addEventListener('drop', (event) => {
+    dispatch(moveTodoItemToList(event.dataTransfer.getData('application/todo-id'), el.id), el);
+    event.preventDefault();
+  });
+
+  el.addEventListener('dragover', (event) => {
+    event.preventDefault();
+  });
+
   return el;
 }
-
-// export class TodoListComponent extends Component {
-//   update(prevState, nextState) {
-//     const prev = prevState?.todoLists?.find((list) => list.id === this._id);
-//     const next = nextState.todoLists.find((list) => list.id === this._id);
-
-//     this.querySelector(':scope > .todo-list > span').innerText = next.name;
-
-//     updateList({
-//       element: this.querySelector(':scope .todo-items'),
-//       nextIds: next.items,
-//       prevIds: prev?.items,
-//       add: (id) => todoItem.create(id, nextState),
-//       update: (item) => todoItem.update(prevState, nextState, item),
-//     });
-//   }
-
-//   constructor(id, state) {
-//     super({ id, state, template });
-//   }
-
-//   connectedCallback() {
-//     this.querySelector(':scope input.todo-list-new').addEventListener('change', (event) => {
-//       this.dispatch(addTodoItem(this.id, event.target.value));
-//       event.target.value = '';
-//     });
-//   }
-// }

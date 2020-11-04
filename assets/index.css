@@ -1,0 +1,200 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/**
+ * Todo List Item
+ */
+.todo-item {
+  list-style: none;
+  height: 20px;
+  position: relative;
+  transition: padding-bottom 0.1s linear, padding-top 0.1s linear;
+}
+
+.todo-item button {
+  display: none;
+  position: absolute;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  border: none;
+  top: -2px;
+  right: -2px;
+  z-index: 100;
+}
+.todo-item .text {
+  overflow: hidden;
+  padding: 2px;
+  height: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.todo-item input {
+  width: 100%;
+  font-size: 16px;
+  height: 20px;
+  padding: 0;
+  vertical-align: -1px;
+  margin-top: -2px;
+  display: none;
+  outline: none;
+  border: none;
+  padding: 2px;
+  background: transparent;
+}
+/* Hover */
+.todo-item:hover .text {
+  height: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  white-space: normal;
+  background-color: lightgray;
+  z-index: 100;
+}
+.todo-item:not(.is-done):hover button.todo-item-edit {
+  display: block;
+}
+/* Done */
+.todo-item.is-done:hover button.todo-item-remove {
+  display: block;
+}
+
+.todo-item.is-done .text {
+  text-decoration: line-through;
+}
+/* Edit */
+.todo-item.is-edit .text {
+  display: none;
+}
+.todo-item.is-edit input {
+  display: inline;
+}
+.todo-item.is-edit button.todo-item-edit,
+.todo-item.is-edit button.todo-item-remove,
+.todo-item.is-edit:hover button.todo-item-edit,
+.todo-item.is-edit:hover button.todo-item-remove {
+  display: none;
+}
+
+/* Drag */
+.todo-item.is-dropped {
+  transition: none;
+}
+.todo-item.is-dragover-end:not(.is-drag) {
+  padding-bottom: 21px;
+}
+
+.todo-item.is-dragover-start:not(.is-drag) {
+  padding-top: 21px;
+}
+
+.todo-item.is-drag {
+  border: 1px dashed gray;
+  background: lightgray;
+}
+
+.todo-item.is-drag .text,
+.todo-item.is-drag input,
+.todo-item.is-drag button.todo-item-edit,
+.todo-item.is-drag button.todo-item-remove,
+.todo-item.is-drag:hover button.todo-item-edit,
+.todo-item.is-drag:hover button.todo-item-remove {
+  display: none;
+}
+
+/**
+ * Todo Items Container
+ */
+
+.todo-items-container {
+  overflow-y: scroll;
+  height: 300px;
+  background-image: linear-gradient(#ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.todo-items-container input.new-item {
+  width: 100%;
+  border: none;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
+  padding: 2px;
+  margin-top: -1px;
+}
+
+/**
+ * Todo List
+ */
+.todo-list {
+  height: 400px;
+}
+
+.todo-list .todo-list-new {
+  width: 100%;
+}
+.todo-list ol {
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Named lists
+ */
+.content {
+  display: flex;
+}
+.items {
+  width: calc(100% - 100px);
+  display: flex;
+}
+.items > div {
+  width: calc((100% - 6 * 20px) / 7);
+  margin-right: 20px;
+}
+.items > div:last-child {
+  margin-right: 0;
+}
+.left-ui,
+.right-ui {
+  width: 50px;
+}
+.left-ui button,
+.right-ui button {
+  position: absolute;
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+  width: 50px;
+  height: 50px;
+  border: none;
+}
+
+/**
+ * Day List
+ */
+.day-list {
+  height: 400px;
+}
+.day-list ol {
+  margin: 0;
+  padding: 0;
+}
+.day-list .title {
+  font: 20px bold Helvetica, sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+}
+.day-list .date {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.day-list .day-list-add {
+  width: 100%;
+}

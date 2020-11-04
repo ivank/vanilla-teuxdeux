@@ -6,11 +6,11 @@ const template = /* html */ `
   <div class="daily-lists">
     <div class="content">
       <div class="left-ui">
-        <button type="button" data-daily-lists-back>Back</button>
+        <button type="button" data-daily-lists-back>&lsaquo;</button>
       </div>
       <div class="items" data-daily-lists-items></div>
       <div class="right-ui">
-        <button type="button" data-daily-lists-forward>Forwad</button>
+        <button type="button" data-daily-lists-forward>&rsaquo;</button>
       </div>
     </div>
   </div>

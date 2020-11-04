@@ -7,12 +7,18 @@ export const initialState = {
       { id: 'td1', day: new Date('2020-01-01') },
       { id: 'td2', day: new Date('2020-01-01') },
       { id: 'td3', day: new Date('2020-01-02') },
+      { id: 'td4', day: new Date('2020-01-02') },
+      { id: 'td5', day: new Date('2020-01-02') },
+      { id: 'td6', day: new Date('2020-01-02') },
     ],
   },
   todoItems: [
-    { id: 'td1', text: 'asdasd', isDone: false },
-    { id: 'td2', text: 'sdfxcv', isDone: true },
-    { id: 'td3', text: 'sd23dfadg', isDone: true },
+    { id: 'td1', text: 'fist thing' },
+    { id: 'td2', text: 'then second' },
+    { id: 'td3', text: 'maybe clean' },
+    { id: 'td4', text: 'fix comupter' },
+    { id: 'td5', text: 'throw away trash' },
+    { id: 'td6', text: 'build a bear', isDone: true },
     { id: 't1', text: 'asdasd', isDone: false },
     { id: 't2', text: 'sdfxcv', isDone: true },
     { id: 't3', text: 'asdasd', isDone: false },
@@ -46,6 +52,18 @@ export function changeTodoItemText(id, text) {
   return { type: 'CHANGE_TODO_ITEM_TEXT', id, text };
 }
 
+export function moveTodoItemOnItem(id, toId, overEnd) {
+  return { type: 'MOVE_TODO_ITEM_OVER_ITEM', id, toId, overEnd };
+}
+
+export function moveTodoItemToDay(id, day) {
+  return { type: 'MOVE_TODO_ITEM_TO_DAY', id, day };
+}
+
+export function moveTodoItemToList(id, listId) {
+  return { type: 'MOVE_TODO_ITEM_TO_LIST', id, listId };
+}
+
 export function removeTodoItem(id) {
   return { type: 'REMOVE_TODO_ITEM', id };
 }
@@ -54,8 +72,8 @@ export function removeDailyTodoItem(id) {
   return { type: 'REMOVE_DAILY_TODO_ITEM', id };
 }
 
-export function addDailyTodoItem(id, day, text) {
-  return { type: 'ADD_DAILY_TODO_ITEM', id, day, text };
+export function addDailyTodoItem(day, text) {
+  return { type: 'ADD_DAILY_TODO_ITEM', day, text };
 }
 
 export function addTodoItem(id, text) {
@@ -68,6 +86,73 @@ export function changeDailyListsCurrentDay(dayChange) {
 
 export function reducer(state, detail) {
   switch (detail.type) {
+    case 'MOVE_TODO_ITEM_OVER_ITEM': {
+      return {
+        ...state,
+        todoLists: state.todoLists.map((list) => ({
+          ...list,
+          items: list.items
+            .filter((id) => id !== detail.id)
+            .reduce(
+              (acc, id) =>
+                acc.concat(
+                  id === detail.toId ? (detail.overEnd ? [id, detail.id] : [detail.id, id]) : id,
+                ),
+              [],
+            ),
+        })),
+        dailyLists: {
+          ...state.dailyLists,
+          items: state.dailyLists.items
+            .filter((item) => item.id !== detail.id)
+            .reduce(
+              (acc, item) =>
+                acc.concat(
+                  item.id === detail.toId
+                    ? detail.overEnd
+                      ? [item, { id: detail.id, day: item.day }]
+                      : [{ id: detail.id, day: item.day }, item]
+                    : item,
+                ),
+              [],
+            ),
+        },
+      };
+    }
+
+    case 'MOVE_TODO_ITEM_TO_DAY': {
+      return {
+        ...state,
+        todoLists: state.todoLists.map((list) => ({
+          ...list,
+          items: list.items.filter((id) => id !== detail.id),
+        })),
+        dailyLists: {
+          ...state.dailyLists,
+          items: [
+            ...state.dailyLists.items.filter((item) => item.id !== detail.id),
+            { id: detail.id, day: detail.day },
+          ],
+        },
+      };
+    }
+
+    case 'MOVE_TODO_ITEM_TO_LIST': {
+      return {
+        ...state,
+        todoLists: state.todoLists.map((list) => ({
+          ...list,
+          items: list.items
+            .filter((id) => id !== detail.id)
+            .concat(list.id === detail.listId ? detail.id : []),
+        })),
+        dailyLists: {
+          ...state.dailyLists,
+          items: state.dailyLists.items.filter((item) => item.id !== detail.id),
+        },
+      };
+    }
+
     case 'ADD_TODO_ITEM': {
       const todoItem = { id: uid(), text: detail.text };
       return {

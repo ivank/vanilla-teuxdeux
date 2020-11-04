@@ -9,19 +9,19 @@ const template = /* html */ `
     </div>
     <div class="content">
       <div class="left-ui">
-        <button type="button" data-named-lists-prev>Prev</button>
+        <button type="button" data-named-lists-prev>&lsaquo;</button>
       </div>
-      <ol class="items" data-named-lists-items></ol>
+      <div class="items" data-named-lists-items></div>
       <div class="right-ui">
-        <button type="button" data-named-lists-next>Next</button>
+        <button type="button" data-named-lists-next>&rsaquo;</button>
       </div>
     </div>
   </div>
 `;
 
 export function update(prevState, nextState, el) {
-  const prevIds = prevState?.namedLists?.items.slice(prevState.namedLists.index);
-  const nextIds = nextState.namedLists.items.slice(nextState.namedLists.index);
+  const prevIds = prevState?.namedLists?.items.slice(prevState.namedLists.index, 7);
+  const nextIds = nextState.namedLists.items.slice(nextState.namedLists.index, 7);
 
   updateList({
     element: el.querySelector(':scope [data-named-lists-items]'),
@@ -41,10 +41,10 @@ export function create(id, state) {
     dispatch(addNamedList(), el);
   });
   el.querySelector(':scope [data-named-lists-prev]').addEventListener('click', () => {
-    dispatch(changeNamedListIndex(+1), el);
+    dispatch(changeNamedListIndex(-1), el);
   });
   el.querySelector(':scope [data-named-lists-next]').addEventListener('click', () => {
-    dispatch(changeNamedListIndex(-1), el);
+    dispatch(changeNamedListIndex(+1), el);
   });
 
   return el;
