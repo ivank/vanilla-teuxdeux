@@ -1,8 +1,24 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+
+/**
+ * Button
+ */
+
+.btn {
+  background: transparent;
+  cursor: pointer;
+  border: none;
+}
+.btn.disabled,
+.btn[disabled] {
+  cursor: auto;
 }
 
 /**
@@ -12,16 +28,13 @@ body {
   list-style: none;
   height: 20px;
   position: relative;
-  transition: padding-bottom 0.1s linear, padding-top 0.1s linear;
+  transition: height 0.1s linear, padding-bottom 0.1s linear, padding-top 0.1s linear;
 }
 
 .todo-item button {
   display: none;
   position: absolute;
   background: transparent;
-  cursor: pointer;
-  font-size: 14px;
-  border: none;
   top: -2px;
   right: -2px;
   z-index: 100;
@@ -87,10 +100,12 @@ body {
   transition: none;
 }
 .todo-item.is-dragover-end:not(.is-drag) {
+  height: 41px;
   padding-bottom: 21px;
 }
 
 .todo-item.is-dragover-start:not(.is-drag) {
+  height: 41px;
   padding-top: 21px;
 }
 
@@ -106,6 +121,97 @@ body {
 .todo-item.is-drag:hover button.todo-item-edit,
 .todo-item.is-drag:hover button.todo-item-remove {
   display: none;
+}
+
+/**
+ * Todo lists container
+ */
+.todo-lists .header {
+  padding: 10px;
+  background-color: lightgray;
+  display: flex;
+}
+.todo-lists .header .start {
+  width: 50px;
+  align-self: flex-start;
+}
+.todo-lists .header .center {
+  width: calc(100% - 100px);
+  display: flex;
+  justify-content: center;
+}
+.todo-lists .header .center .todo-list-index {
+  color: gray;
+}
+.todo-lists .header .center .todo-list-index.is-active {
+  color: black;
+}
+.todo-lists .header .end {
+  width: 50px;
+  text-align: right;
+  align-self: flex-start;
+}
+.todo-lists .header .toggle {
+  transition: transform 0.2s ease-out;
+  transform-origin: center;
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+.todo-lists .header .toggle.is-active {
+  transform: rotate(180deg);
+}
+.todo-lists .header .add {
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+.todo-lists .content {
+  display: flex;
+}
+.todo-lists .content.is-hidden {
+  display: none;
+}
+.todo-lists .items-container {
+  width: calc(100% - 100px);
+  overflow: hidden;
+}
+.todo-lists .items-container .items {
+  display: flex;
+}
+.todo-lists .items-container .items > .todo-list {
+  width: calc(100% / 7);
+}
+
+.todo-lists .left-ui,
+.todo-lists .right-ui {
+  width: 50px;
+}
+.todo-lists .left-ui button,
+.todo-lists .right-ui button {
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+}
+
+/**
+ * Todo list
+ */
+.todo-list {
+  height: 400px;
+  border-left: 1px solid gray;
+  padding: 10px;
+}
+.todo-list:last-child {
+  border-right: 1px solid gray;
+}
+.todo-list .todo-list-new {
+  width: 100%;
+}
+
+.todo-list ol {
+  margin: 0;
+  padding: 0;
 }
 
 /**
@@ -130,62 +236,24 @@ body {
 }
 
 /**
- * Todo List
+ * Daily List
  */
-.todo-list {
-  height: 400px;
+.daily-lists .items-container {
+  border-right: 1px solid gray;
+}
+.daily-lists .items-container .items {
+  width: 300%;
+  margin-left: -100%;
 }
 
-.todo-list .todo-list-new {
-  width: 100%;
-}
-.todo-list ol {
-  margin: 0;
-  padding: 0;
+.daily-lists .items-container .items.is-animating {
+  transition: margin-left 0.2s ease-out;
 }
 
-/**
- * Named lists
- */
-.content {
-  display: flex;
-}
-.items {
-  width: calc(100% - 100px);
-  display: flex;
-}
-.items > div {
-  width: calc((100% - 6 * 20px) / 7);
-  margin-right: 20px;
-}
-.items > div:last-child {
-  margin-right: 0;
-}
-.left-ui,
-.right-ui {
-  width: 50px;
-}
-.left-ui button,
-.right-ui button {
-  position: absolute;
-  background: transparent;
-  cursor: pointer;
-  font-size: 20px;
-  width: 50px;
-  height: 50px;
-  border: none;
+.daily-lists .items-container .items > .todo-list {
+  width: calc(100% / 21);
 }
 
-/**
- * Day List
- */
-.day-list {
-  height: 400px;
-}
-.day-list ol {
-  margin: 0;
-  padding: 0;
-}
 .day-list .title {
   font: 20px bold Helvetica, sans-serif;
   text-align: center;
@@ -195,6 +263,37 @@ body {
   text-align: center;
   margin-bottom: 20px;
 }
-.day-list .day-list-add {
+
+/**
+ * Named List
+ */
+
+.named-list .controls {
+  display: grid;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  text-align: center;
+  position: relative;
+}
+.named-list:hover .controls {
+  opacity: 1;
+}
+.named-list .name {
+  outline: none;
+  font-size: 20px;
+  border: 0;
+  background: transparent;
+  display: block;
+  text-align: center;
+  padding: 5px;
   width: 100%;
+}
+.named-list .controls .todo-item-remove {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.named-list .controls .todo-item-drag {
+  display: inline-block;
 }

@@ -1,8 +1,9 @@
-import { fence, uid } from './utils.js';
+import { fence, uid, changeDay } from './utils.js';
 
 export const initialState = {
   dailyLists: {
     currentDay: new Date('2020-01-01'),
+    currentVisibleDay: new Date('2020-01-01'),
     items: [
       { id: 'td1', day: new Date('2020-01-01') },
       { id: 'td2', day: new Date('2020-01-01') },
@@ -32,12 +33,29 @@ export const initialState = {
   ],
   namedLists: {
     index: 0,
+    isHidden: false,
     items: ['n1', 'n2', 'n3'],
   },
 };
 
+export function toggleNamedLists() {
+  return { type: 'TOGGLE_NAMED_LISTS' };
+}
+
+export function removeNamedList(id) {
+  return { type: 'REMOVE_NAMED_LIST', id };
+}
+
+export function changeNamedListName(id, name) {
+  return { type: 'CHANGE_NAMED_LIST_NAME', id, name };
+}
+
 export function addNamedList() {
   return { type: 'ADD_NAMED_LIST' };
+}
+
+export function toNamedList(id) {
+  return { type: 'TO_NAMED_LIST', id };
 }
 
 export function changeNamedListIndex(change) {
@@ -86,6 +104,30 @@ export function changeDailyListsCurrentDay(dayChange) {
 
 export function reducer(state, detail) {
   switch (detail.type) {
+    case 'TOGGLE_NAMED_LISTS': {
+      return {
+        ...state,
+        namedLists: { ...state.namedLists, isHidden: !state.namedLists.isHidden },
+      };
+    }
+    case 'CHANGE_NAMED_LIST_NAME': {
+      return {
+        ...state,
+        todoLists: state.todoLists.map((list) =>
+          list.id === detail.id ? { ...list, name: detail.name } : list,
+        ),
+      };
+    }
+    case 'REMOVE_NAMED_LIST': {
+      return {
+        ...state,
+        todoLists: state.todoLists.filter((list) => list.id !== detail.id),
+        namedLists: {
+          ...state.namedLists,
+          items: state.namedLists.items.filter((id) => id !== detail.id),
+        },
+      };
+    }
     case 'MOVE_TODO_ITEM_OVER_ITEM': {
       return {
         ...state,
@@ -189,14 +231,32 @@ export function reducer(state, detail) {
     }
 
     case 'CHANGE_NAMED_LIST_INDEX': {
-      const index = fence(0, state.namedLists.items.length, state.namedLists.index + detail.change);
+      const index = fence(
+        0,
+        Math.max(0, state.namedLists.items.length - 7),
+        state.namedLists.index + detail.change,
+      );
+      return { ...state, namedLists: { ...state.namedLists, index } };
+    }
+
+    case 'TO_NAMED_LIST': {
+      const newIndex = state.namedLists.items.findIndex((id) => id === detail.id);
+      const index = fence(
+        0,
+        Math.max(0, state.namedLists.items.length - 7),
+        state.namedLists.index > newIndex ? newIndex : newIndex - 6,
+      );
       return { ...state, namedLists: { ...state.namedLists, index } };
     }
 
     case 'CHANGE_DAILY_LISTS_CURRENT_DAY': {
-      const currentDay = new Date(state.dailyLists.currentDay);
-      currentDay.setDate(currentDay.getDate() + detail.dayChange);
-      return { ...state, dailyLists: { ...state.dailyLists, currentDay } };
+      return {
+        ...state,
+        dailyLists: {
+          ...state.dailyLists,
+          currentDay: changeDay(detail.dayChange, state.dailyLists.currentDay),
+        },
+      };
     }
 
     case 'TOGGLE_TODO_ITEM_DONE':

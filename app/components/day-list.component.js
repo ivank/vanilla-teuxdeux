@@ -10,7 +10,7 @@ const dateFormat = new Intl.DateTimeFormat(navigator.language, {
 });
 
 const template = /* html */ `
-  <div class="day-list">
+  <div class="todo-list day-list">
     <div class="title" data-day-list-title>Title</div>
     <div class="date" data-day-list-date>Title</div>
     <div class="todo-items-container">

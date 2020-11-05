@@ -10,8 +10,8 @@ export const template = /* html */ `
   <li class="todo-item" draggable="true">
     <div class="text" data-item-text>this is some content</div>
     <input type="text" data-item-input>
-    <button type="button" class="todo-item-edit" data-item-edit>&#9998;</button>
-    <button type="button" class="todo-item-remove" data-item-remove>&cross;</button>
+    <button type="button" class="btn todo-item-edit" data-item-edit>&#9998;</button>
+    <button type="button" class="btn todo-item-remove" data-item-remove>&cross;</button>
   </li>
 `;
 

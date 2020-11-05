@@ -18,6 +18,17 @@ export function moveIndex(from, to, items) {
   return updated;
 }
 
+export function changeDay(change, date) {
+  const chnaged = new Date(date);
+  chnaged.setDate(chnaged.getDate() + change);
+  return chnaged;
+}
+
+export function diffDays(from, to) {
+  const diffTime = from - to;
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}
+
 // export function flow(...fns) {
 //   return function (data) {
 //     return fns.reduce((acc, fn) => fn(acc), data);
