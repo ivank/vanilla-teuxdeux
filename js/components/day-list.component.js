@@ -1,5 +1,7 @@
 import { addDailyTodoItem, moveTodoItemToDay } from '../state.js';
-import { component, updateList, dispatch } from './component.js';
+import { startOfDay, isSameDay } from '../utils.js';
+import { component, updateList, dispatch } from './html.js';
+import { dropZone } from './drag-and-drop.js';
 import * as todoItem from './todo-item.component.js';
 
 const titleFormat = new Intl.DateTimeFormat(navigator.language, { weekday: 'long' });
@@ -11,8 +13,8 @@ const dateFormat = new Intl.DateTimeFormat(navigator.language, {
 
 const template = /* html */ `
   <div class="todo-list day-list">
-    <div class="title" data-day-list-title>Title</div>
-    <div class="date" data-day-list-date>Title</div>
+    <h2 data-day-list-title>Title</h2>
+    <h3 data-day-list-date>Title</h3>
     <div class="todo-items-container">
       <ol class="day-list-items"></ol>
       <input type="text" class="new-item" data-day-list-new>
@@ -22,21 +24,23 @@ const template = /* html */ `
 
 function toDayItems(state, day) {
   return (
-    state?.dailyLists.items
+    state?.data.dailyLists.items
       .filter((item) => item.day.getDate() === day.getDate())
       .map((item) => item.id) ?? []
   );
 }
 
 export function update(prevState, nextState, el) {
-  el.querySelector(':scope [data-day-list-title]').innerText = titleFormat.format(el.day);
-  el.querySelector(':scope [data-day-list-date]').innerText = dateFormat.format(el.day);
+  el.classList.toggle('is-past', el.day < startOfDay(new Date()));
+  el.classList.toggle('is-today', isSameDay(el.day, new Date()));
+  el.querySelector('[data-day-list-title]').innerText = titleFormat.format(el.day);
+  el.querySelector('[data-day-list-date]').innerText = dateFormat.format(el.day);
 
   const prevIds = toDayItems(prevState, el.day);
   const nextIds = toDayItems(nextState, el.day);
 
   updateList({
-    element: el.querySelector(':scope ol'),
+    element: el.querySelector('ol'),
     prevIds,
     nextIds,
     add: (id) => todoItem.create(id, nextState),
@@ -50,22 +54,15 @@ export function create(id, day, state) {
   el.day = day;
   update(undefined, state, el);
 
-  el.querySelector(':scope [data-day-list-new]').addEventListener('change', (event) => {
+  dropZone({
+    element: el,
+    name: 'application/todo-item',
+    onDrop: ({ moveId }) => dispatch(moveTodoItemToDay(moveId, el.day), el),
+  });
+
+  el.querySelector('[data-day-list-new]').addEventListener('change', (event) => {
     dispatch(addDailyTodoItem(el.day, event.target.value), el);
     event.target.value = '';
-  });
-
-  /**
-   * Drag items from different lists / days
-   */
-
-  el.addEventListener('drop', (event) => {
-    dispatch(moveTodoItemToDay(event.dataTransfer.getData('application/todo-id'), el.day), el);
-    event.preventDefault();
-  });
-
-  el.addEventListener('dragover', (event) => {
-    event.preventDefault();
   });
 
   return el;

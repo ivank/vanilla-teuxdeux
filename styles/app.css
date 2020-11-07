@@ -1,0 +1,184 @@
+:root {
+  --text: rgb(56, 56, 56);
+  --text-light: rgb(223, 223, 223);
+
+  --bg: white;
+
+  --primary: #5992a8;
+  --primary-text: rgb(232, 244, 248);
+
+  --secondary-text: #79493b;
+
+  --danger: #f5b6a3;
+  --danger-text: black;
+
+  --title-font: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--title-font);
+  padding: 0;
+  margin: 0;
+}
+h1 {
+  font-size: 18px;
+}
+h2 {
+  font-size: 16px;
+}
+h3 {
+  font-size: 15px;
+}
+
+.primary {
+  background: var(--primary);
+  color: var(--primary-text);
+}
+
+.primary a {
+  background: var(--primary);
+  color: var(--primary-text);
+  text-decoration: underline;
+}
+.primary a:hover {
+  filter: brightness(120%);
+}
+
+/**
+ * Offsets
+ */
+.mt-1 {
+  margin-top: 20px;
+}
+
+/**
+ * Button
+ * ========================================
+ */
+
+.btn {
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  font-family: var(--title-font);
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.btn.icon {
+  font-size: 20px;
+  padding: 4px 10px;
+}
+.btn:hover:not(.disabled):not([disabled]) {
+  filter: brightness(95%);
+}
+.btn:active:not(.disabled):not([disabled]) {
+  filter: brightness(90%);
+  transform: translateY(1px);
+}
+
+.btn[disabled],
+.btn.disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+
+/* Colors */
+
+.btn.primary {
+  background-color: var(--primary-text);
+  color: var(--text);
+}
+
+.btn.light {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/**
+ * Tooltip
+ */
+.tooltip-container {
+  position: relative;
+}
+.tooltip {
+  position: absolute;
+  opacity: 0;
+  padding: 10px;
+  border-radius: 5px;
+  width: 200px;
+  transform: translateX(-50%);
+  left: 50%;
+  bottom: calc(100% - 5px);
+  background: var(--danger);
+  color: var(--danger-text);
+  pointer-events: none;
+  transition: opacity 0.2s ease-out;
+}
+.tooltip::after {
+  content: '▼';
+  color: var(--danger);
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  transform: translateX(-50%);
+}
+.tooltip-container:hover .tooltip {
+  opacity: 1;
+}
+
+/**
+ * Header
+ * ========================================
+ */
+
+header {
+  padding: 10px 10px 10px 20px;
+  align-items: center;
+  display: flex;
+}
+header h1 {
+  flex-grow: 1;
+}
+header .header-controls {
+  display: flex;
+}
+header .header-controls-undo {
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+}
+header .header-controls-undo h3 {
+  margin-right: 10px;
+}
+
+/**
+ * Footer
+ * ========================================
+ */
+
+footer {
+  padding: 10px 20px;
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/**
+ * App
+ * ========================================
+ */
+#app {
+  min-height: 100vh;
+}

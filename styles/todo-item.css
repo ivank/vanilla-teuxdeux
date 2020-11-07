@@ -1,0 +1,116 @@
+.todo-item {
+  list-style: none;
+  height: 20px;
+  position: relative;
+  transition: height 0.1s linear, padding-bottom 0.1s linear, padding-top 0.1s linear;
+}
+
+.todo-item .btn {
+  display: none;
+  position: absolute;
+  font-size: 16px;
+  background: transparent;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0;
+  height: 21px;
+  width: 21px;
+}
+.todo-item .text {
+  overflow: hidden;
+  padding: 3px 2px;
+  height: 18px;
+  font-size: 13px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 18px;
+}
+.todo-item .text a {
+  color: var(--text);
+}
+.todo-item input {
+  width: 100%;
+  font-size: 13px;
+  height: 20px;
+  padding: 0;
+  vertical-align: -1px;
+  margin-top: -2px;
+  display: none;
+  outline: none;
+  border: none;
+  padding: 3px 2px;
+  letter-spacing: -0.33px;
+  background: transparent;
+}
+
+/* Hover */
+.todo-item:hover .text {
+  height: auto;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  white-space: normal;
+  background-color: var(--danger);
+  color: var(--danger-text);
+  z-index: 100;
+}
+.todo-item:hover .text a {
+  color: var(--danger-text);
+}
+.todo-item:not(.is-done):hover .btn.todo-item-edit {
+  display: block;
+}
+/* Done */
+.todo-item.is-done:hover .btn.todo-item-remove {
+  display: block;
+}
+
+.todo-item.is-done .text {
+  text-decoration: line-through;
+}
+.todo-item.is-done:not(:hover) .text {
+  opacity: 0.5;
+}
+/* Edit */
+.todo-item.is-edit .text {
+  display: none;
+}
+.todo-item.is-edit input {
+  display: inline;
+}
+.todo-item.is-edit .btn.todo-item-edit,
+.todo-item.is-edit .btn.todo-item-remove,
+.todo-item.is-edit:hover .btn.todo-item-edit,
+.todo-item.is-edit:hover .btn.todo-item-remove {
+  display: none;
+}
+
+/* Drag */
+.todo-item.is-dropped {
+  transition: none;
+}
+.todo-item.is-dragover-end:not(.is-drag) {
+  height: 41px;
+  padding-bottom: 21px;
+}
+
+.todo-item.is-dragover-start:not(.is-drag) {
+  height: 41px;
+  padding-top: 21px;
+}
+
+.todo-item.is-drag {
+  border: 1px dashed var(--text);
+  background: var(--text-light);
+}
+
+.todo-item.is-drag .text,
+.todo-item.is-drag input,
+.todo-item.is-drag .btn.todo-item-edit,
+.todo-item.is-drag .btn.todo-item-remove,
+.todo-item.is-drag:hover .btn.todo-item-edit,
+.todo-item.is-drag:hover .btn.todo-item-remove {
+  display: none;
+}

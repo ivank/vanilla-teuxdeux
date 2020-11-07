@@ -1,0 +1,88 @@
+.named-lists {
+  margin-top: 25px;
+}
+.named-lists .section-header {
+  padding: 10px;
+  display: flex;
+}
+.named-lists .section-header .start {
+  width: 50px;
+  align-self: flex-start;
+}
+.named-lists .section-header .center {
+  width: calc(100% - 100px);
+  display: flex;
+  justify-content: center;
+}
+.named-lists .section-header .center .btn {
+  background: transparent;
+  color: var(--primary-text);
+  padding: 4px 8px;
+}
+.named-lists .section-header .center .btn span {
+  transition: opacity 0.2s ease-out;
+  font-size: 20px;
+  opacity: 0.5;
+}
+.named-lists .section-header .center .btn .tooltip {
+  text-transform: uppercase;
+}
+.named-lists .section-header .center .btn.is-active span {
+  opacity: 1;
+}
+
+.named-lists .section-header .end {
+  width: 50px;
+  text-align: right;
+  align-self: flex-start;
+}
+.named-lists .section-header .toggle {
+  display: inline-block;
+  transition: transform 0.2s ease-out;
+  transform-origin: center;
+}
+.named-lists .section-header .btn.is-active .toggle {
+  transform: rotate(180deg);
+}
+
+.named-list .controls {
+  display: grid;
+  opacity: 0;
+  margin-top: -10px;
+  transition: opacity 0.3s ease-out;
+  text-align: center;
+  position: relative;
+}
+.named-list:hover .controls {
+  opacity: 1;
+}
+.named-list .name {
+  outline: none;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-family: var(--title-font);
+  border: 0;
+  background: var(--bg);
+  border-radius: 5px;
+  display: block;
+  text-align: center;
+  padding: 8px;
+  margin: 4px 0;
+  width: 100%;
+}
+.named-list .name:focus {
+  filter: brightness(90%);
+}
+.named-list .controls .todo-item-remove {
+  position: absolute;
+  height: 30px;
+  left: 0;
+  top: 0;
+}
+
+.named-list .controls .todo-item-drag {
+  display: inline-block;
+  height: 30px;
+  padding: 6px 10px;
+  margin: 0 40px;
+}

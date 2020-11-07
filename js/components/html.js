@@ -19,7 +19,6 @@ export function updateList({ prevIds = [], nextIds = [], add, update, element })
       update(updatedItem);
       if (prevIndex !== nextIndex && current[nextIndex]) {
         element.insertBefore(updatedItem, current[nextIndex]);
-        current = moveIndex(prevIndex, nextIndex, current);
         prevIdsFiltered = moveIndex(prevIndex, nextIndex, prevIdsFiltered);
       }
     } else {
@@ -30,6 +29,7 @@ export function updateList({ prevIds = [], nextIds = [], add, update, element })
         element.appendChild(newItem);
       }
     }
+    current = Array.from(element.querySelectorAll(':scope > *'));
   });
 }
 
@@ -41,36 +41,18 @@ export function component(id, template) {
   return el;
 }
 
+const replacements = [
+  [/\*\*(?<text>[^\n]+)\*\*/, '<strong>$<text></strong>'],
+  [/\_(?<text>[^\n]+)\_/, '<em>$<text></em>'],
+  [/\[(?<text>[^\n\]]+)\]\((?<link>[^\)]+)\)/, '<a href="$<link>" target="_blank">$<text></a>'],
+];
+
+export function markdownToHtml(text) {
+  return replacements.reduce((acc, [regex, replacement]) => acc.replace(regex, replacement), text);
+}
+
 export function dispatch(detail, el) {
   detail.type
     ? el.dispatchEvent(new CustomEvent('action', { detail, bubbles: true }))
     : detail((detail) => el.dispatchEvent(new CustomEvent('action', { detail, bubbles: true })));
-}
-
-export class Component extends HTMLElement {
-  update() {}
-
-  get id() {
-    return this._id;
-  }
-
-  dispatch(detail) {
-    if (detail.type) {
-      this.dispatchEvent(new CustomEvent('action', { detail, bubbles: true }));
-    } else {
-      detail((detail) => this.dispatchEvent(new CustomEvent('action', { detail, bubbles: true })));
-    }
-  }
-
-  constructor({ template, state, id }) {
-    super();
-    this._id = id;
-    this.setAttribute('id', id);
-    if (template) {
-      this.innerHTML = template;
-    }
-    if (state) {
-      this.update(undefined, state);
-    }
-  }
 }

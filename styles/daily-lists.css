@@ -1,0 +1,25 @@
+.daily-lists .items-container .items {
+  width: 300%;
+  margin-left: -100%;
+}
+.daily-lists .items-container .items > .todo-list {
+  width: calc(100% / 15);
+}
+.day-list.is-past {
+  opacity: 0.5;
+}
+.day-list.is-today,
+.day-list.is-today a {
+  color: var(--secondary-text);
+}
+
+.day-list h2 {
+  text-align: center;
+  text-transform: uppercase;
+}
+.day-list h3 {
+  margin-top: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
