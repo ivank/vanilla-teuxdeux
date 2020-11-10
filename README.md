@@ -4,6 +4,8 @@ This is clone of the [TeuxDeux](https://teuxdeux.com) app, but implemented witho
 
 It was inspired by [Vanila Todo](https://github.com/morris/vanilla-todo) but using more modern web technologies and techniques, though sacrificing IE < 11 support.
 
+**[Try it out yourself](https://ivank.github.io/vanilla-teuxdeux/)**
+
 This is for the most part a case study, not a finished product. The app itself - [TeuxDeux](https://teuxdeux.com) looks like the perfect candidate. A clear cut Single Page Application (SPA), which by its nature requres a more sophisticated state management approach than jquery-esqe "the html dom is my state", but still simple enough to be implemented with reasonable amount of effort.
 
 This case study is an attempt to answer the question - can we build a modern, animated, stateful SPA with **no dependencies and no build steps**, in a concise and maintainable way. The short answer, that I hope this proves is that it's actually _possible_.
@@ -44,7 +46,7 @@ function update(prevState, nextState, el) {
 
 This leaves one big problem though. Lists of elements. If for example we had a list of `['t1', 't2', 't3']`, that changed to `['t3', 't2', 't4']` we'll need to figure out that we've removed `t1`, rearranged `t2` and `t3` and added `t4`. This is what virtual doms really gives you, sparing you the cost of just removing all the elements and re-adding them with new values.
 
-I've implemented a very naive "element list update", that accomplishes this reliably enough, though not very efficiently in [js/html.js](js/html.js). Next step would probably be pulling in the venerable [Levenshtein distance algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) that could give us the needed steps to convert "previous array" to "next array" in the least possible steps, but I thought such things were out of the scope of this study. Perhaps a TODO.
+I've implemented a very naive "element list update", that accomplishes this reliably enough, though not very efficiently in [js/components/html.js](js/components/html.js#L3-L34). Next step would probably be pulling in the venerable [Levenshtein distance algorithm](https://en.wikipedia.org/wiki/Levenshtein_distance) that could give us the needed steps to convert "previous array" to "next array" in the least possible steps, but I thought such things were out of the scope of this study. Perhaps a TODO.
 
 I've skipped doing any performance optimisations, as I didn't really encounter any problems. We could easily roll our sleeves and implement the React way of dealing with it by checking state equality before performing updates. Since our data is immutable, and flat this would be particularly easy, but I'll leave this as an exercise to the reader.
 
