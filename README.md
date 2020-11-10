@@ -84,6 +84,10 @@ If you throw away shadow dom, then you end up with just a simple class. Since I'
 
 I'll grant that web components excel in making separated components, that can be dropped into any webpage and just work. In the process they try very hard to guard said components from anything that's present on the page - js, html, css etc. For an SPA though we are in full control of all of the components. This makes the implementation based on them a lot more complex and unwieldy than necessary.
 
+## CSS!
+
+The css side of this project is probably a lot less thought out. Going about it without resets and frameworks turned out surprisingly unpleasant. The web really needs a global reset for all of those styles, why wasn't there a globally recoginsed html attribute to do such a reset is a mystery to me. I'd likely develop my own styleguide / mini-framework and use that, something akin to a more specialized [tailwind](https://tailwindcss.com) perhaps but this should suffice for the time being.
+
 ## Testing?
 
 Currently there is no testing. Sadly w3c and the like have not blessed us with an established way of writing tests for the dom, or javascript in general. It will not be practical I think to "not use any dependencies" since any testing would involve some anyway.
