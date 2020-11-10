@@ -15,8 +15,8 @@ const template = /* html */ `
       <button
         type="button"
         class="btn primary"
-        data-header-clear title="Deletes the locally stored data from this device">
-          Clear
+        data-header-reset title="Deletes the locally stored data from this device">
+          Reset
       </button>
       <div class="header-controls-undo">
         <h3
@@ -57,8 +57,12 @@ export function update(prevState, nextState, el) {
 export function create(id, state) {
   const el = update(undefined, state, component(id, template));
 
-  el.querySelector('[data-header-clear]').addEventListener('click', () => {
-    if (confirm('Are you sure you want to clear all todo information?')) {
+  el.querySelector('[data-header-reset]').addEventListener('click', () => {
+    if (
+      confirm(
+        `Are you sure you want to reset all todo information? Any changes you've made will be deleted!`,
+      )
+    ) {
       dispatch(clearState(), el);
     }
   });

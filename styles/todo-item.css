@@ -14,17 +14,21 @@
   right: 0;
   z-index: 100;
   padding: 0;
-  height: 21px;
-  width: 21px;
+  height: 18px;
+  width: 18px;
 }
 .todo-item .text {
   overflow: hidden;
   padding: 3px 2px;
-  height: 18px;
+  height: 20px;
   font-size: 13px;
   white-space: nowrap;
   text-overflow: ellipsis;
   padding-right: 18px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
 }
 .todo-item .text a {
   color: var(--text);
@@ -47,10 +51,6 @@
 /* Hover */
 .todo-item:hover .text {
   height: auto;
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
   white-space: normal;
   background-color: var(--danger);
   color: var(--danger-text);
