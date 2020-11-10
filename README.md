@@ -107,3 +107,7 @@ I think the presence of so many "Poor man's" points make it obvious that JavaScr
 What I personally lacked the most were `state management`, `virtual dom` and `lodash/fp`'s utility functions. If those were present, it might have been very simple to implement the app itself. A lot of the things we've relied on transpilres and libraries for are also no longer needed - import / export, query selectors, drag and drop, asset bundling etc all could theoretically be dispensed with, with fairly minimal consequences.
 
 The best approach would probably be to utilize some dependencies for core tasks, things like utility functions / state management seem to be required in any SPA. And we could utilize bundlers / transpilers on the deployment stage, and leave development to be instant with raw js/css files.
+
+## Attribution
+
+Though I have not used _any_ of the source code from [Morris Brodersen](mailto:mb@morrisbrodersen.de) project [vanilla-todo](https://github.com/morris/vanilla-todo), it does deserve a mention as it was a huge insparation. Funny enough the implementation ended up with quite similar size (44 KB), even with so radically different approaches. Maybe that speaks something to the intrinsic size of the problem space.
