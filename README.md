@@ -4,7 +4,7 @@ This is clone of the [TeuxDeux](https://teuxdeux.com) app, but implemented witho
 
 This case study is an attempt to answer the question - can we build a modern, animated, stateful SPA with **no dependencies and no build steps**, in a concise and maintainable way. Let's see how it goes.
 
-It was inspired by [Vanila Todo](https://github.com/morris/vanilla-todo) but using more modern web technologies and techniques, though sacrificing IE < 11 support.
+It was inspired by [Vanila Todo](https://github.com/morris/vanilla-todo) but using more modern web technologies and techniques, though sacrificing IE < 11 support in the process.
 
 **[Try it out yourself](https://ivank.github.io/vanilla-teuxdeux/)**
 
@@ -20,7 +20,9 @@ The truth is this is such a complex problem that the fickle world of us frontend
 
 I just went ahead and picked redux's approach for this study as it requires very few lines to actually implement, is robust enough for our needs and due to its immutable nature, offers great debuggability. It's also familiar enough to future audiences so this work doesn't look _too_ alien, always a concern for something so bespoke. The other approaches popularized by [Angular](https://angular.io), [Vue](https://vuejs.org), [Svetle](https://svelte.dev), etc. are great too, but I'm personally more familiar with redux, so I decided to go that way.
 
-As it turned out, all of the business logic naturally settled into [js/state.js](js/state.js) file with all the action creators and reducer logic. Action creators were key, as without TypeScript it would have been quite tricky to track down which actions are fired when, but having the actions and responses in the same file allows for very simple debugging.
+As it turned out, all of the business logic naturally settled into the file [js/state.js](js/state.js) with all the action creators and reducer logic. Action creators were key, as without TypeScript it would have been quite tricky to track down which actions are fired when, but having the actions and responses in the same file allows for very simple debugging.
+
+We can also utilize the vanilla `CustomEvent` to our advantage, so that our dom becomes our event emitter / store, as can be seen in [js/components/app.component.js](js/components/app.component.js).
 
 Another benefit of having a global immutable state is that it's simple to **implement undo / redo functionality**, something that is a must in a modern application.
 
