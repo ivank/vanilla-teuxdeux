@@ -2,13 +2,13 @@
 
 This is clone of the [TeuxDeux](https://teuxdeux.com) app, but implemented without any build steps, dependencies and images. Vanilla HTML, CSS and JavaScript. **44 KB** unminified and unbundled.
 
+This case study is an attempt to answer the question - can we build a modern, animated, stateful SPA with **no dependencies and no build steps**, in a concise and maintainable way. Let's see how it goes.
+
 It was inspired by [Vanila Todo](https://github.com/morris/vanilla-todo) but using more modern web technologies and techniques, though sacrificing IE < 11 support.
 
 **[Try it out yourself](https://ivank.github.io/vanilla-teuxdeux/)**
 
 This is for the most part a case study, not a finished product. The original app - [TeuxDeux](https://teuxdeux.com) looks like the perfect candidate. A clear cut Single Page Application (SPA), which by its nature requres a more sophisticated state management approach than jquery-esqe "the html dom is my state", but still simple enough to be implemented with reasonable amount of effort.
-
-This case study is an attempt to answer the question - can we build a modern, animated, stateful SPA with **no dependencies and no build steps**, in a concise and maintainable way. Let's see how it goes.
 
 Here's a map of the journey, what I've learned and what I've concluded.
 
