@@ -62,7 +62,7 @@ With the choice of redux-style state machine, we have a big unwieldy state objec
 const nextState = { ...prevState, todoItems: [...prevState.todoItems, newItem] };
 ```
 
-Having a complex deeply nested object makes those updates not very ergonomic. As a long user of [lodash/fp](https://github.com/lodash/lodash/wiki/FP-Guide) to accomplish those tasks I thought of giving it a go and making a [mini lodash utils](js/utils.js) library to help with all those updates. The functions behave exactly like the lodash/fp ones, though they have their curring "baked in", since I know that's the style I'll be always using them.
+Having a complex deeply nested object makes those updates not very ergonomic. As a long time user of [lodash/fp](https://github.com/lodash/lodash/wiki/FP-Guide) to accomplish those tasks I thought of giving it a go and making a [mini lodash utils](js/utils.js) library to help with all those updates. The functions behave exactly like the lodash/fp ones, though they have their curring "baked in", since I know that's the style I'll be always using them.
 
 ## No images
 
